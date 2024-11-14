@@ -19,6 +19,12 @@ include(ac_build_prj_util)
 
 add_ac_local(0.1.1)
 
+make_ac_local_plugin_available(
+    NAME ilib-foo
+    VERSION 1.0.0
+    GITHUB alpaca-core/ilib-foo
+)
+
 #######################################
 # subdirs / targets
 add_executable(${PROJECT_NAME}
