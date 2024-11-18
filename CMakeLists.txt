@@ -19,12 +19,6 @@ include(ac_build_prj_util)
 
 add_ac_local(0.1.1)
 
-make_ac_local_plugin_available(
-    NAME ilib-foo
-    VERSION 1.0.0
-    GITHUB alpaca-core/ilib-foo
-)
-
 #######################################
 # subdirs / targets
 add_executable(${PROJECT_NAME}
@@ -34,3 +28,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ac::local
     ac::jalog
 )
+
+#######################################
+# plugins
+
+if(NOT AC_BUILD_DEPLOY)
+    make_ac_local_plugin_available(
+        NAME ilib-foo
+        VERSION 1.0.0
+        GITHUB alpaca-core/ilib-foo
+    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        aclp::out-dir
+    )
+endif()
