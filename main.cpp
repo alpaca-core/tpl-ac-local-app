@@ -1,6 +1,7 @@
 #include <ac/local/Lib.hpp>
-#include <ac/frameio/local/LocalIoRunner.hpp>
+#include <ac/local/IoCtx.hpp>
 #include <ac/frameio/local/BlockingIo.hpp>
+#include <ac/Frame.hpp>
 
 #include <ac/jalog/Instance.hpp>
 #include <ac/jalog/sinks/DefaultSink.hpp>
@@ -21,11 +22,13 @@ int main() {
 
     ac::local::Lib::loadAllPlugins();
 
-    ac::frameio::LocalIoRunner io;
-    auto fooHandler = ac::local::Lib::createSessionHandler("foo");
-    auto foo = io.connectBlocking(std::move(fooHandler));
+    ac::frameio::BlockingIoCtx blockingCtx;
+    ac::local::IoCtx io;
 
-    foo.poll(); // state info from plugin (dummy)
+    auto& fooProvider = ac::local::Lib::getProvider("foo");
+    ac::frameio::BlockingIo foo(io.connect(fooProvider), blockingCtx);
+
+    foo.poll(); // state info from plugin (foo)
     foo.push({"load_model", {}});
     foo.poll(); // load_model response
     foo.poll(); // state info from plugin (model loaded)
@@ -35,6 +38,6 @@ int main() {
     foo.push({"run", {{"input", {"The", "song", "goes:"}}, {"splice", false}}});
 
     auto result = foo.poll(); // run response
-    std::cout << result.frame.data << "\n";
+    std::cout << result.value.data << "\n";
     return 0;
 }
