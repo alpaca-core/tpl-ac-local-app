@@ -29,13 +29,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ac::jalog
 )
 
+add_custom_target(run-${PROJECT_NAME} COMMAND ${PROJECT_NAME})
+
 #######################################
 # plugins
 
 if(NOT AC_BUILD_DEPLOY)
     make_ac_local_plugin_available(
         NAME ilib-foo
-        VERSION 1.0.0
+        VERSION 0.1.0
         GITHUB alpaca-core/ilib-foo
     )
     target_link_libraries(${PROJECT_NAME} PRIVATE
