@@ -37,7 +37,7 @@ add_custom_target(run-${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 if(NOT AC_BUILD_DEPLOY)
     make_ac_local_plugin_available(
         NAME ilib-foo
-        VERSION 0.1.0
+        VERSION 0.1.1
         GITHUB alpaca-core/ilib-foo
     )
     target_link_libraries(${PROJECT_NAME} PRIVATE
