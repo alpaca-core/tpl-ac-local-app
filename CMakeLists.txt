@@ -17,7 +17,7 @@ include(ac_build_prj_util)
 #######################################
 # packages
 
-add_ac_local(0.1.17)
+add_ac_local(0.1.18)
 
 #######################################
 # subdirs / targets
@@ -37,7 +37,7 @@ add_custom_target(run-${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 if(NOT AC_BUILD_DEPLOY)
     make_ac_local_plugin_available(
         NAME ilib-foo
-        VERSION 0.1.1
+        VERSION 0.1.2
         GITHUB alpaca-core/ilib-foo
     )
     target_link_libraries(${PROJECT_NAME} PRIVATE
